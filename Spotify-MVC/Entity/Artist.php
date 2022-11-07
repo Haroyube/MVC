@@ -16,7 +16,7 @@ class Artist
 
         public string $link,
 
-        public string $picture,
+        public string|null $picture,
     )
     {
     }
@@ -88,4 +88,26 @@ class Artist
         return $this;
     }
 
+    public function display(){
+        $genres =[];
+        foreach ($this->genders as $genre){
+            $genres = '<p Class="card-text"> '.$genre.'</p>';
+        }
+        if ($this->getPicture()){
+            $picture = $this->getPicture();
+        }else{
+            $picture = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.depositphotos.com%2Fstock-photos%2Fundefined.html&psig=AOvVaw0QJihFKVZ0090Tr6vqulSy&ust=1667898806923000&source=images&cd=vfe&ved=0CAkQjRxqFwoTCKCK9tbcm_sCFQAAAAAdAAAAABAE';
+        }
+        $html = '<div Class="card col-md-8" style="width: 18rem;">
+                <img src='.$picture.' Class="card-img-top" alt="...">
+                <div Class="card-body">
+                    <h5 Class="card-title">'.$this->getName().' </h5>
+                    <p Class="card-text"> Genre : '. '</p>
+             <p Class="card-text"> Nombre de followers : '.$this->getFollowers().'</p>
+                    <a href='.$this->getLink().' Class="btn btn-primary">Détails</a>
+                </div>
+              </div>
+        ';
+        return $html;
+    }
 }

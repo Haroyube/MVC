@@ -21,6 +21,11 @@ use App\Entity\Artist;
 <div class="row">
     <?php
 
+    foreach ($artists as $res){
+
+        echo $res->display();
+
+    }
     ?>
 </div>
 </body>
