@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-class Artist
+class Artist extends Model
 {
 
+    public int $id;
+
     public function __construct(
-        public string $id,
+        public string $idSpotify,
 
         public string $name,
 
@@ -19,6 +21,9 @@ class Artist
         public string|null $picture,
     )
     {
+
+        $this->table = 'artist';
+//        $this->create();
     }
 
     public function getId(): string
@@ -111,8 +116,12 @@ class Artist
                     <p Class="card-text"> Genre : '. $genre.'</p>
              <p Class="card-text"> Nombre de followers : '.$this->getFollowers().'</p>
                     <form action="http://localhost:8000/hugo/artist" method="POST">
-                        <input type="text" id="artist" name="artistName" value='.$this->getId().' hidden><br>
+                        <input type="text" id="artist" name="artistName" value='.$this->idSpotify.' hidden><br>
                         <input type="submit" name="submit" value="Détails">
+                    </form>
+                    <form action="http://localhost:8000/hugo/saveArtist" method="POST">
+                        <input type="text" id="artist" name="artistName" value='.$this->idSpotify.' hidden><br>
+                        <input type="submit" name="submit" value="Favoris">
                     </form>
                 </div>
               </div>

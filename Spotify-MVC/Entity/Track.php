@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-class Music
+class Track extends Model
 {
+    public string $id;
     public function __construct(
-        public string $id,
+        public int $idSpotify,
 
         public string $name,
 
@@ -18,6 +19,8 @@ class Music
 
     )
     {
+        $this->table = 'track';
+
     }
 
     /**

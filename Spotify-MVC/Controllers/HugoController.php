@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Entity\Album;
 use App\Entity\Artist;
-use App\Entity\Music;
+use App\Entity\Track;
 
 class HugoController extends Controller
 {
@@ -72,6 +72,9 @@ class HugoController extends Controller
         $this->render('hugo/search',['artist' => $artist,'albums' => $albumList]);
     }
 
+    public function saveArtist(){
+        var_dump($_POST['artistName']);
+    }
 
     public function track(){
 
@@ -88,10 +91,10 @@ class HugoController extends Controller
         curl_close($ch);
 
         #endregion
-
+        var_dump($result->tracks->items);
         $tracks = [];
         foreach ($result->tracks->items as $res){
-            $track = new Music($res->id,$res->name,$res->type,$res->external_urls->spotify,$res->track_number);
+            $track = new Track($res->id,$res->name,$res->type,$res->external_urls->spotify,$res->track_number);
             $tracks[] = $track;
         }
 

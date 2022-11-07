@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-class Album
+class Album extends Model
 {
+    public string $id;
     public function __construct(
-        public string $id,
+        public int $idSpotify,
 
         public string $name,
 
@@ -24,6 +25,7 @@ class Album
 
     )
     {
+        $this->table = 'album';
     }
 
     /**
@@ -170,9 +172,9 @@ class Album
                     <p Class="card-text"> Artiste : '. $this->getArtist()->getName().'</p>
              <p Class="card-text"> Date de sortie : '.$this->getDate().'</p>
              <form action="http://localhost:8000/hugo/track" method="POST">
-                        <input type="text" id="album" name="albumName" value='.$this->getId().' hidden><br>
-                        <input type="submit" name="submit" value="Détails">
-                    </form>
+                 <input type="text" id="album" name="albumName" value='.$this->getId().' hidden><br>
+                 <input type="submit" name="submit" value="Détails">
+             </form>
                 </div>
               </div>
         ';

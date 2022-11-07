@@ -54,6 +54,9 @@ class Model extends Db
         foreach ($this as $field => $value) {
             // INSERT INTO annonces (titre, description, actif) VALUES (?, ?, ?)
             if ($value !== null && $field != 'db' && $field != 'table') {
+                if(is_array($value)){
+                    $value=json_encode($value);
+                }
                 $fields[] = $field;
                 $inter[] = "?";
                 $values[] = $value;
