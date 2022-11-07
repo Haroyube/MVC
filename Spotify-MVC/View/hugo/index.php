@@ -18,6 +18,11 @@ use App\Entity\Artist;
 <title>Document</title>
 </head>
 <body>
+<form action="" method="POST">
+    <label for="artist">Artiste recherché : </label><br>
+    <input type="text" id="artist" name="artistName" ><br>
+    <input type="submit" name="submit" value="Rechercher">
+</form>
 <div class="row">
     <?php
 
