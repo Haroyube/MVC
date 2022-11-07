@@ -23,8 +23,16 @@
     <?php
 
     echo $artist->display();
-//    var_dump($result);
 
+    ?>
+</div>
+<div class="row">
+    <?php
+    foreach ($albums as $res){
+
+        echo $res->display();
+
+    }
     ?>
 </div>
 </div>
