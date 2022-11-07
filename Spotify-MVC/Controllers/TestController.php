@@ -11,6 +11,7 @@ class TestController extends Controller
 
     public function test()
     {
-        $this->render('test/test');
+        $test="Bonjour je suis un test devant classe";
+        $this->render('test/test',compact('test'));
     }
 }
