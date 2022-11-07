@@ -169,6 +169,10 @@ class Album
                     <h5 Class="card-title">'.$this->getName().' </h5>
                     <p Class="card-text"> Artiste : '. $this->getArtist()->getName().'</p>
              <p Class="card-text"> Date de sortie : '.$this->getDate().'</p>
+             <form action="http://localhost:8000/hugo/track" method="POST">
+                        <input type="text" id="album" name="albumName" value='.$this->getId().' hidden><br>
+                        <input type="submit" name="submit" value="Détails">
+                    </form>
                 </div>
               </div>
         ';

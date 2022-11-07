@@ -17,25 +17,15 @@
 </head>
 <body>
 
-
-
 <div class="row">
     <?php
 
-    echo $artist->display();
-
-    ?>
-</div>
-<div class="row">
-    <?php
-
-    foreach ($albums as $res){
+    foreach ($tracks as $res){
 
         echo $res->display();
 
     }
     ?>
-</div>
 </div>
 </body>
 </html>
