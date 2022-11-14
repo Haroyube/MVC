@@ -23,17 +23,16 @@ class Artist extends Model
     {
 
         $this->table = 'artist';
-//        $this->create();
     }
 
     public function getId(): string
     {
-        return $this->id;
+        return $this->idSpotify;
     }
 
     public function setId(string $id): self
     {
-        $this->id = $id;
+        $this->idSpotify = $id;
         return $this;
     }
 
@@ -93,6 +92,11 @@ class Artist extends Model
         return $this;
     }
 
+    public function save(Artist $artist){
+        $artist->create();
+
+    }
+
     public function display(){
 
         $genre='';
@@ -120,7 +124,7 @@ class Artist extends Model
                         <input type="submit" name="submit" value="Détails">
                     </form>
                     <form action="http://localhost:8000/hugo/saveArtist" method="POST">
-                        <input type="text" id="artist" name="artistName" value='.$this->idSpotify.' hidden><br>
+                            <input type="text" id="artist" name="artistName" value='.$this->idSpotify.' hidden><br>
                         <input type="submit" name="submit" value="Favoris">
                     </form>
                 </div>

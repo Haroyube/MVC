@@ -16,6 +16,7 @@ class HugoController extends Controller
         }else{
             $artistName = 'powerwolf';
         }
+        $artistName = ucfirst($artistName);
         #region data
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/search?q=".$artistName."&type=artist");
@@ -73,9 +74,58 @@ class HugoController extends Controller
     }
 
     public function saveArtist(){
-        var_dump($_POST['artistName']);
+
+        $artistName = $_POST['artistName'];
+
+        #region data
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/artists/"."$artistName");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token'] ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($result);
+        #endregion
+
+        $artist = new Artist($result->id,$result->name,$result->followers->total,$result->genres,$result->external_urls->spotify,$result->images[0]->url ?? 'test');
+        $artist->create();
+        $artists = [];
+        foreach ($artist->findAll() as $res){
+
+            $artists[] = $res;
+        }
+
+        $this->render('hugo/favorite',['artists' => $artists]);
     }
 
+    public function deleteArtist(){
+
+        $artistName = $_POST['artistName'];
+
+        #region data
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/artists/"."$artistName");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token'] ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($result);
+        #endregion
+
+        $artist = new Artist($result->id,$result->name,$result->followers->total,$result->genres,$result->external_urls->spotify,$result->images[0]->url ?? 'test');
+
+        $artist->delete($artist->findBy(['idSpotify' => $result->id])[0]->id);
+        $artists = [];
+        foreach ($artist->findAll() as $res){
+
+            $artists[] = $res;
+        }
+
+        $this->render('hugo/favorite',['artists' => $artists]);
+
+    }
     public function track(){
 
         $albumName = $_POST['albumName'];
@@ -91,7 +141,6 @@ class HugoController extends Controller
         curl_close($ch);
 
         #endregion
-        var_dump($result->tracks->items);
         $tracks = [];
         foreach ($result->tracks->items as $res){
             $track = new Track($res->id,$res->name,$res->type,$res->external_urls->spotify,$res->track_number);

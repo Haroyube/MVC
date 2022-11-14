@@ -4,9 +4,9 @@ namespace App\Entity;
 
 class Album extends Model
 {
-    public string $id;
+    public int $id;
     public function __construct(
-        public int $idSpotify,
+        public string $idSpotify,
 
         public string $name,
 
@@ -145,7 +145,7 @@ class Album extends Model
      */
     public function getId(): string
     {
-        return $this->id;
+        return $this->idSpotify;
     }
 
     /**
@@ -153,7 +153,7 @@ class Album extends Model
      */
     public function setId(string $id): void
     {
-        $this->id = $id;
+        $this->idSpotify = $id;
     }
 
     public function display(){
