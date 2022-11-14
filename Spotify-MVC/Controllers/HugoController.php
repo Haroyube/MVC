@@ -89,11 +89,18 @@ class HugoController extends Controller
         #endregion
 
         $artist = new Artist($result->id,$result->name,$result->followers->total,$result->genres,$result->external_urls->spotify,$result->images[0]->url ?? 'test');
-        $artist->create();
+        if (!$artist->findBy(['idSpotify'=> $result->id])){
+            $artist->create();
+        }
         $artists = [];
+
         foreach ($artist->findAll() as $res){
 
             $artists[] = $res;
+        }
+
+        if (!$artist->findBy(['idSpotify'=> $result->id])){
+            $artist->create();
         }
 
         $this->render('hugo/favorite',['artists' => $artists]);
@@ -126,6 +133,7 @@ class HugoController extends Controller
         $this->render('hugo/favorite',['artists' => $artists]);
 
     }
+
     public function track(){
 
         $albumName = $_POST['albumName'];
