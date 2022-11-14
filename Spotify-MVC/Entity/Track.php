@@ -113,6 +113,11 @@ class Track extends Model
                     <h5 Class="card-title">'.$this->getName().' </h5>
                     <p Class="card-text"> Numéro : '. $this->getNumber().'</p>
                     <a href='.$this->getLink().' Class="btn btn-primary">Détails</a>
+                    <form action="http://localhost:8000/hugo/saveTrack" method="POST">
+                            <input type="text" id="trackName" name="trackName" value='.$this->idSpotify.' hidden><br>
+                        <input type="submit" name="submit" value="Favoris">
+                    </form>
+                   
               </div>
               </div>
         ';

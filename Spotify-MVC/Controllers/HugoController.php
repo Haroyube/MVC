@@ -103,7 +103,7 @@ class HugoController extends Controller
             $artist->create();
         }
 
-        $this->render('hugo/favorite',['artists' => $artists]);
+        $this->render('hugo/favoriteArtists',['artists' => $artists]);
     }
 
     public function deleteArtist(){
@@ -130,7 +130,7 @@ class HugoController extends Controller
             $artists[] = $res;
         }
 
-        $this->render('hugo/favorite',['artists' => $artists]);
+        $this->render('hugo/favoriteArtists',['artists' => $artists]);
 
     }
 
@@ -156,5 +156,61 @@ class HugoController extends Controller
         }
 
         $this->render('hugo/tracks',['tracks' => $tracks]);
+    }
+
+    public function saveTrack(){
+        $trackName = $_POST['trackName'];
+
+        #region data
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/tracks/"."$trackName");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token'] ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($result);
+        #endregion
+
+
+        $track = new Track($result->id,$result->name,$result->type,$result->external_urls->spotify,$result->track_number);
+
+        if (!$track->findBy(['idSpotify'=> $result->id])){
+            $track->create();
+        }
+        $tracks = [];
+
+        foreach ($track->findAll() as $res){
+            $tracks[] = $res;
+        }
+
+
+        $this->render('hugo/favoriteTracks',['tracks' => $tracks]);
+    }
+
+    public function deleteTrack(){
+        $trackName = $_POST['trackName'];
+
+        #region data
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/tracks/"."$trackName");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token'] ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($result);
+        #endregion
+
+        $track = new Track($result->id,$result->name,$result->type,$result->external_urls->spotify,$result->track_number);
+
+        $track->delete($track->findBy(['idSpotify' => $result->id])[0]->id);
+        $tracks = [];
+
+        foreach ($track->findAll() as $res){
+            $tracks[] = $res;
+        }
+
+        $this->render('hugo/favoriteTracks',['tracks' => $tracks]);
     }
 }

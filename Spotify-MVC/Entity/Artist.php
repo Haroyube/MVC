@@ -92,10 +92,6 @@ class Artist extends Model
         return $this;
     }
 
-    public function save(Artist $artist){
-        $artist->create();
-
-    }
 
     public function display(){
 
