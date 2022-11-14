@@ -171,7 +171,7 @@ class Album extends Model
                     <h5 Class="card-title">'.$this->getName().' </h5>
                     <p Class="card-text"> Artiste : '. $this->getArtist()->getName().'</p>
              <p Class="card-text"> Date de sortie : '.$this->getDate().'</p>
-             <form action="http://localhost:8000/hugo/track" method="POST">
+             <form action="http://localhost:8000/track/track" method="POST">
                  <input type="text" id="album" name="albumName" value='.$this->getId().' hidden><br>
                  <input type="submit" name="submit" value="Détails">
              </form>

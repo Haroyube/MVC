@@ -30,7 +30,7 @@
                     <h5 Class="card-title">'.$res->name.' </h5>
                     <p Class="card-text"> Numéro : '. $res->number.'</p>
                     <a href='.$res->link.' Class="btn btn-primary">Détails</a>
-                    <form action="http://localhost:8000/hugo/deleteTrack" method="POST">
+                    <form action="http://localhost:8000/track/deleteTrack" method="POST">
                         <input type="text" id="track" name="trackName" value='.$res->idSpotify.' hidden><br>
                         <input type="submit" name="submit" value="Supprimer des favoris">
                     </form>

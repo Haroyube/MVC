@@ -22,14 +22,16 @@
 <div class="row">
     <?php
 
+
     foreach ($artists as $res){
 
-        $genreList= explode(",",$res->genders);
+        $genreList= preg_split("/[^a-z^ ]/",$res->genders);
         $genre='';
-        foreach ($genreList as $genre){
+        foreach ($genreList as $genrer){
             if($genre != ''){
-                $genre = '<p Class="card-text"> '.$genre.'</p>'.$genre;
+                $genre = '<p Class="card-text"> '.$genrer.'</p>'.$genre;
             }
+            $genre = '<p Class="card-text"> '.$genre.'</p>';
         }
         $link = '';
         if ($res->picture != 'test'){
@@ -38,17 +40,18 @@
 
             $picture = 'https://medias.slash-paris.com/media_attachments/images/000/029/359/carre_noir_blackout_tuesday_art-1_medium.jpg?1591355942';
         }
+
         echo '<div Class="card col-md-8" style="width: 18rem;">
                 <img src='.$res->picture.' Class="card-img-top" alt="...">
                 <div Class="card-body">
                     <h5 Class="card-title">'.$res->name.' </h5>
                     <p Class="card-text"> Genre : '. $genre.'</p>
              <p Class="card-text"> Nombre de followers : '.$res->followers.'</p>
-                    <form action="http://localhost:8000/hugo/artist" method="POST">
+                    <form action="http://localhost:8000/artist/searchArtist" method="POST">
                         <input type="text" id="artist" name="artistName" value='.$res->idSpotify.' hidden><br>
                         <input type="submit" name="submit" value="Détails">
                     </form>
-                    <form action="http://localhost:8000/hugo/deleteArtist" method="POST">
+                    <form action="http://localhost:8000/artist/deleteArtist" method="POST">
                         <input type="text" id="artist" name="artistName" value='.$res->idSpotify.' hidden><br>
                         <input type="submit" name="submit" value="Supprimer des favoris">
                     </form>

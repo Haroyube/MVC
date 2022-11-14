@@ -21,10 +21,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Accueil</a>
+                <a class="nav-link" href="/hugo/index">Accueil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/test">Test</a>
+                <a class="nav-link" href="/track/favoriteTrack">Musiques favoris</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/artist/favoriteArtist">Artistes favoris</a>
             </li>
         </ul>
     </div>
